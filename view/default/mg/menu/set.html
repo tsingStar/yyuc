@@ -1,0 +1,554 @@
+<!-- @NO-WRAP -->
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9"><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta names="apple-mobile-web-app-status-bar-style" content="black-translucent" />	
+<title>{$pname}</title>
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/bootstrap-responsive.min.css">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/themes.css">
+<link rel="stylesheet" href="/css/wx.css">
+<link rel="shortcut icon" href="{$Icon}" />
+<script type="text/javascript" src="/flat/layer/layer.js"></script>
+<script type="text/javascript" src="/js/mg.js"></script>
+<style>
+body {
+	background-color: #ffffff;
+	padding-top: 20px;
+}
+
+.left {
+	position: absolute;
+	top: 140px;
+	left: 20px;
+	width: 258px;
+	border-right: 1px solid #CCC;
+	overflow-y: auto;
+}
+
+.right {
+	position: absolute;
+	top: 140px;
+	left: 280px;
+	width: 600px;
+	overflow: auto;
+}
+
+.tree-menu {
+	float: right;
+}
+
+.tree-menu span {
+	margin-left: 6px;
+}
+
+.tree-menu span i {
+	cursor: pointer;
+}
+
+.icon-plus {
+	background-position: -408px -96px;
+}
+
+.icon-remove {
+	background-position: -312px 0;
+}
+
+.icon-edit {
+	background-position: -96px -72px;
+}
+
+#menu_tree {
+	margin-right: 20px;
+}
+
+.right iframe {
+	height: 100%;
+	width: 100%;
+	z-index: 20;
+	border: 0;
+	margin: 0 auto;
+	display: block;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+}
+
+li {
+	line-height: 16px;
+}
+
+.om-tree-node a {
+	display: inline-block;
+	*display: inline;
+	*zoom: 1;
+	width: 115px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+#vip_tip {
+	text-align: center;
+}
+
+.actions {
+	position: absolute;
+	bottom: 20px;
+	left: 10px;
+	width: 268px;
+	border-right: 1px solid #CCC;
+	height: 60px;
+}
+
+.actions .btn {
+	position: relative;
+	top: 30px;
+}
+
+.szcjbt, #czselarea, .zizicd {
+	display: none;
+}
+
+.maincd {
+	cursor: pointer;
+}
+
+.zizicd {
+	width: 100%;
+	height: 38px;
+	border: 1px solid gray;
+	margin-bottom: -1px;
+	line-height: 38px;
+	text-align: center;
+	cursor: pointer;
+	position: relative;
+}
+</style>
+</head>
+<body class="{Session::get('st')}">
+	<div class="container-fluid" id="wxcontent">
+		<table style="margin: 0 auto;">
+			<tr>
+				<td>
+					<div style="background-image: url('/img/menuphone.jpg'); width: 344px; height: 623px; position: relative;">
+						<div style="position: absolute; bottom: 170px; left: 46px; width: 82px;" zcdrel="maincd1">
+							<div class="zizicd" rel="zizicd1">子菜单</div>
+							<div class="zizicd" rel="zizicd2">子菜单</div>
+							<div class="zizicd" rel="zizicd3">子菜单</div>
+							<div class="zizicd" rel="zizicd4">子菜单</div>
+							<div class="zizicd" rel="zizicd5">子菜单</div>
+						</div>
+						<div style="position: absolute; bottom: 170px; left: 131px; width: 83px;" zcdrel="maincd2">
+							<div class="zizicd" rel="zizicd1">子菜单</div>
+							<div class="zizicd" rel="zizicd2">子菜单</div>
+							<div class="zizicd" rel="zizicd3">子菜单</div>
+							<div class="zizicd" rel="zizicd4">子菜单</div>
+							<div class="zizicd" rel="zizicd5">子菜单</div>
+						</div>
+						<div style="position: absolute; bottom: 170px; left: 216px; width: 83px;" zcdrel="maincd3">
+							<div class="zizicd" rel="zizicd1">子菜单</div>
+							<div class="zizicd" rel="zizicd2">子菜单</div>
+							<div class="zizicd" rel="zizicd3">子菜单</div>
+							<div class="zizicd" rel="zizicd4">子菜单</div>
+							<div class="zizicd" rel="zizicd5">子菜单</div>
+						</div>
+						<div style="position: absolute; bottom: 122px; left: 40px;">
+							<table>
+								<tr>
+									<td>
+										<div style="height: 45px; width: 85px; line-height: 45px; text-align: center;" id="maincd1" reldata="" class="maincd">菜单一</div>
+									</td>
+									<td>
+										<div style="height: 45px; width: 85px; line-height: 45px; text-align: center; border-left: 1px solid gray;" id="maincd2" reldata="" class="maincd">菜单二</div>
+									</td>
+									<td>
+										<div style="height: 45px; width: 85px; line-height: 45px; text-align: center; border-left: 1px solid gray;" id="maincd3" reldata="" class="maincd">菜单三</div>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</td>
+				<td valign="top"><br />
+					<div style="position: relative; width: 100%">
+						<button class="btn btn-big btn-primary" id="sync" onclick="fbcaidan()">
+							<i class="icon-cloud-upload"></i>发布菜单
+						</button>
+						<button class="btn btn-big btn-primary" id="stop" onclick="stopcaidan()">
+							<i class="icon-stop"></i>停用菜单
+						</button>
+						<button class="btn btn-big btn-primary" id="saveOrder" onclick="savedata()">
+							<i class="icon-save"></i>暂存菜单数据(不发布)
+						</button>
+					</div> 
+					<br/>
+					<div id="czselarea">
+						<div class="alert alert-info" style="line-height: 16px; color: #ff0000;">
+							提示：未认证的订阅号
+							<span style="font-weight: bold; font-sizd: 110%; color: #3a87ad; font-style: oblique;">菜单点击事件</span>
+							只支持 [回复图文]、[打开图文链接]
+						</div>
+						<div id="top" class="alert alert-info" style="line-height: 16px;">
+							菜单名称：<input type="text" id="cdmcinpo" style="margin-top: 6px;">
+						</div>
+						<div class="control-group">
+							<label class="control-label" for="yjcdgssel">一级菜单个数: 
+								<select class="span2" id="yjcdgssel" name="yjcdgssel">
+									<option value="1">1个</option>
+									<option value="2">2个</option>
+									<option value="3">3个</option>
+								</select>
+							</label>
+						</div>
+						<div class="control-group">
+							<label class="control-label" for="answertype">菜单点击事件: 
+								<select class="span2" id="answertype" name="answertype">
+									<option value="res_ejcd" id="xsejcdopt">显示二级菜单</option>
+									<option value="res_gjz">触发关键字</option>
+									<option value="res_url">打开固定网页</option>
+									<option value="res_media_id">回复图文</option>
+									<option value="res_view_limited">打开图文链接</option>
+								</select>
+							</label>
+						</div>
+					</div> <!-- 二级菜单 -->
+					<div class="szcjbt" id="res_ejcd">
+						<div id="top" class="alert alert-info">至少填写一项子菜单</div>
+						<span class="res_ejcd_1"> 
+							<label class="control-label" for="answertype">子菜单一:</label> 
+							<input type="text">
+						</span> 
+						<br/> 
+						<span class="res_ejcd_2"> 
+							<label class="control-label" for="answertype">子菜单二:</label> 
+							<input type="text">
+						</span> 
+						<br/> 
+						<span class="res_ejcd_3"> 
+							<label class="control-label" for="answertype">子菜单三:</label> 
+							<input type="text">
+						</span> 
+						<br/> 
+						<span class="res_ejcd_4"> 
+							<label class="control-label" for="answertype">子菜单四:</label> 
+							<input type="text">
+						</span> 
+						<br/> 
+						<span class="res_ejcd_5"> 
+							<label class="control-label" for="answertype">子菜单五:</label> 
+							<input type="text">
+						</span> 
+						<br/>
+					</div> <!-- 关键字  -->
+					<div class="szcjbt" id="res_gjz">
+						触发的关键字:&nbsp;<input type="text" name="event_gjz">
+					</div>
+					<div class="szcjbt" id="res_media_id">
+						素材ID:&nbsp;<input type="text" name="event_media_id"> 
+						<a class="btn media_btn">素材列表</a>
+					</div>
+					<div class="szcjbt" id="res_view_limited">
+						跳转到图文素材ID:&nbsp;<input type="text" name="event_view_limited">
+						<a class="btn media_btn">素材列表</a>
+					</div> 
+					{if $u->wapi} <!-- 网页  -->
+					<div class="szcjbt" id="res_url">
+						<table>
+							<tr>
+								<td>要打开的页面:&nbsp;</td>
+								<td><div>{commontarget($mm,'url')}</div></td>
+							</tr>
+						</table>
+						<input type="text" name="event_url" style="display: none;">
+					</div> 
+					{else} <!-- 网页  -->
+					<div class="szcjbt" id="res_url">
+						要打开的URL:&nbsp;<input type="text" name="event_url" placeholder="形如：http://m.baidu.com/">
+					</div> 
+					{/if}
+				</td>
+			</tr>
+		</table>
+	</div>
+	<script type="text/javascript">
+		$(function() {
+			$('.media_btn').click(function() {
+				window.ejsetpopdiv = $.layer({
+					type : 2,
+					title : false,
+					iframe : {
+						src : 'getmedia.html?list=media'
+					},
+					area : [ '366px', '650px' ],
+					offset : [ '60px', '20px' ]
+				});
+				return false;
+			})
+			$('#yjcdgssel').change(
+				function() {
+					var gs = parseInt($(this).val());
+					$('.maincd').width(87).show();
+					$('div[zcdrel="maincd1"]').width(80)
+							.css('left', '46px').show();
+					$('div[zcdrel="maincd2"]').width(83).css('left',
+							'129px').show();
+					$('div[zcdrel="maincd3"]').width(84).css('left',
+							'215px').show();
+					if (gs == 1) {
+						$('#maincd2').hide();
+						$('#maincd3').hide();
+						$('div[zcdrel="maincd2"]').hide();
+						$('div[zcdrel="maincd3"]').hide();
+						$('#maincd1').width(252);
+						$('div[zcdrel="maincd1"]').width(254).css('left',
+								'46px').show();
+					}
+					if (gs == 2) {
+						$('#maincd3').hide();
+						$('div[zcdrel="maincd3"]').hide();
+						$('#maincd1').width(132);
+						$('#maincd2').width(123);
+						$('div[zcdrel="maincd1"]').width(125).css('left',
+								'46px').show();
+						$('div[zcdrel="maincd2"]').width(125).css('left',
+								'174px').show();
+					}
+				});
+	
+			$('.maincd').click(function() {
+				suitdata();
+				window.curcd = this;
+				window.curctyp = '1';
+				backdata();
+			});
+			$('.zizicd').click(function() {
+				suitdata();
+				window.curcd = this;
+				window.curctyp = '2';
+				backdata();
+			});
+			$('#answertype').change(function() {
+				$('.szcjbt').hide();
+				$('#' + $(this).val()).show();
+			});
+	
+			$('.szcjbt').find('input,textarea').on(
+					'keyup click change mouseup blur', function() {
+						suitdata();
+					});
+			$('#cdmcinpo').on('keyup click change mouseup blur', function() {
+				suitdata();
+			});
+	
+			initthedata();
+			$('.maincd').eq(0).trigger('click');
+		});
+		//把菜单信息转化为控制信息
+		function backdata() {
+			$('.zizicd,.maincd').css('color', 'black').css('fontWeight', '200')
+					.css('fontSize', '12px');
+			$(window.curcd).css('color', 'blue').css('fontWeight', '600').css(
+					'fontSize', '15px');
+	
+			$('#res_ejcd').find('input[type="text"]').val('');
+			$('#xsejcdopt').remove();
+			$('.szcjbt').find('input,textarea').val('');
+			if (window.curctyp == '1') {
+				$('#answertype')
+						.prepend(
+								'<option value="res_ejcd" id="xsejcdopt">显示二级菜单</option>');
+			}
+			var cdid = $(window.curcd).attr('id');
+			var cddata = $.trim($(window.curcd).attr('reldata'));
+			$('#czselarea').show();
+			$('#cdmcinpo').val($(window.curcd).text());
+			if (cddata != '') {
+				cddata = _.evalJSON(cddata);
+				$('#answertype').val(cddata.typ);
+				$('#answertype').trigger('change');
+				if (cddata.typ == 'res_ejcd') {
+					//回填菜单
+					var zcddiv = $('div[zcdrel="' + cdid + '"]');
+					if ($.trim(cddata.data) != '') {
+						var ds = cddata.data.split('@');
+						zcddiv.find('.zizicd').hide();
+						for (var i = 0; i < ds.length; i++) {
+							$('#res_ejcd').find('input[type="text"]').eq(
+								parseInt(ds[i]) - 1).val(
+								zcddiv.find('.zizicd').eq(
+								parseInt(ds[i]) - 1).show().text());
+						}
+					}
+				} else {
+					var inptxt = $('#' + cddata.typ).find('input[type="text"]');
+					if (inptxt.size() == 1) {
+						inptxt.val(cddata.data);
+						tofill_target_set($('#res_url'), '');
+					} else {
+						tofill_target_set($('#' + cddata.typ), cddata.data);
+					}
+				}
+	
+			} else {
+				cddata = {};
+				if (window.curctyp == '1') {
+					$('#answertype').val('res_ejcd');
+				} else {
+					$('#answertype').val('res_gjz');
+				}
+				$('#answertype').trigger('change');
+			}
+	
+		}
+		//把控制信息回填到菜单中
+		function suitdata() {
+			if (window.curcd) {
+				var cdid = $(window.curcd).attr('id');
+				var cddata = $.trim($(window.curcd).attr('reldata'));
+				if (cddata != '') {
+					cddata = _.evalJSON(cddata);
+				} else {
+					cddata = {};
+				}
+				cddata.typ = $('#answertype').val();
+	
+				var zcddiv = $('div[zcdrel="' + cdid + '"]');
+				if (cddata.typ == 'res_ejcd') {
+					//填充菜单
+					zcddiv.show();
+					var sjarr = [];
+					$('#res_ejcd').find('input[type="text"]').each(function(i) {
+						var temp_zcd = zcddiv.find('.zizicd').eq(i);
+						if ($.trim($(this).val()) != '') {
+							temp_zcd.text($.trim($(this).val())).show();
+							sjarr[sjarr.length] = i + 1;
+						} else {
+							temp_zcd.hide();
+						}
+					});
+					cddata.data = sjarr.join('@');
+				} else {
+					zcddiv.hide();
+					var inputext = $('#' + cddata.typ).find(
+							'input[type="text"]');
+					if (inputext.size() > 1) {
+						cddata.data = $('#' + cddata.typ)
+								.find('.target_theurl').val();
+					} else {
+						cddata.data = inputext.val();
+					}
+				}
+				$(window.curcd).text($('#cdmcinpo').val());
+				$(window.curcd).attr('reldata', _.toJSON(cddata));
+			}
+		}
+		function savedata(fun) {
+			suitdata();
+			var alldata = [];
+			$('.maincd:visible').each(function(i) {
+				var con = $.trim($(this).attr('reldata'));
+				if (con != '') {
+					var cddata = _.evalJSON(con);
+					var cdid = $(this).attr('id');
+					cddata.tit = $.trim($(this).text());
+					if (cddata.typ == 'res_ejcd') {
+						//回填菜单
+						var zcddiv = $('div[zcdrel="' + cdid + '"]');
+						if ($.trim(cddata.data) != '') {
+							var ds = cddata.data.split('@');
+							cddata.subdata = {};
+							for (var i = 0; i < ds.length; i++) {
+								var ind = parseInt(ds[i]) - 1;
+								var zcd = zcddiv.find('.zizicd').eq(ind);
+								var ttstr = $.trim(zcd.attr('reldata'));
+								var ssdata = {};
+	
+								if (ttstr != '') {
+									ssdata = _.evalJSON(zcd.attr('reldata'));
+								}
+								ssdata.tit = $.trim(zcd.text());
+								cddata.subdata['zizicd' + ds[i]] = ssdata;
+							}
+						}
+					}
+					alldata[alldata.length] = cddata;
+				}
+			});
+			window.loading = layer.load(0);
+			_.ajax('savemenu.html', {
+				data : _.toJSON(alldata)
+			}, function(m) {
+				if (m == 'ok') {
+					if (fun) {
+						fun();
+					} else {
+						layer.msg('保存成功', 1, 1);
+						layer.close(window.loading);
+					}
+				}
+			});
+		}
+		function fbcaidan() {
+			savedata(function() {
+				_.ajax('fbmenu.html', null, function(m) {
+					if (m == 'nosec') {
+						layer.msg('授权信息不正确', 1, 3);
+					} else if (m == 'ok') {
+						_.toast('菜单发布成功');
+					} else if (m == 'noauthtoken') {
+						_.toast('获取授权token失败');
+					} else {
+						layer.msg(m, 2, -1);
+					}
+					layer.close(window.loading);
+				});
+			});
+		}
+		function stopcaidan() {
+			window.loading = layer.load(0);
+			_.ajax('delmenu.html', null, function(m) {
+				if (m == 'nosec') {
+					layer.msg('授权信息不正确', 1, 3);
+				} else if (m == 'ok') {
+					_.toast('菜单停用成功');
+				} else {
+					layer.msg(m, 2, -1);
+				}
+				layer.close(window.loading);
+			});
+		}
+	
+		function initthedata() {
+			var idata = $.trim($('#initdatat').val());
+			if (idata != '') {
+				var csdata = _.evalJSON(idata);
+				$('#yjcdgssel').val(csdata.length).trigger('change');
+				for (var i = 0; i < csdata.length; i++) {
+					var mcd = $('.maincd').eq(i);
+					var zcddiv = $('div[zcdrel="' + mcd.attr('id') + '"]');
+					var cdjda = csdata[i];
+					if (cdjda.typ == 'res_ejcd') {
+						for ( var ejcd in cdjda.subdata) {
+							zcddiv.find('[rel="' + ejcd + '"]').attr('reldata',
+							_.toJSON(cdjda.subdata[ejcd])).text(
+							cdjda.subdata[ejcd].tit).show();
+						}
+					}
+					cdjda.subdata = null;
+					mcd.attr('reldata', _.toJSON(cdjda));
+					mcd.text(cdjda.tit);
+				}
+			} else {
+				$('#yjcdgssel').val(3).trigger('change');
+			}
+		}
+	</script>
+	<textarea style="display: none;" id="initdatat">
+	{trim($m->menu)}
+	</textarea>
+</body>
+</html>

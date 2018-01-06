@@ -1,0 +1,29 @@
+<div class="box-title">
+	<h3>
+		<i class="glyphicon-eye_open"></i>
+		关注回复及无匹配回复
+	</h3>
+</div>
+<div class="box-content">
+	<form action="" method="POST" class='form-horizontal'>{tk()}{$m->hidden('id')}
+		<div class="control-group">
+			<label for="password" class="control-label">关注时触发关键字</label>
+			<div class="controls">
+				{$m->text('kw','class="input-xlarge"')}
+				<span class="help-block">用户关注后等同于触发此关键字，根据此关键字回复相应的信息。</span>
+			</div>
+		</div>
+		<div class="control-group">
+			<label for="password" class="control-label">无匹配时触发关键字</label>
+			<div class="controls">
+				{$m->text('nokw','class="input-xlarge"')}
+				<span class="help-block">用户输入无匹配的关键词时，根据此关键字回复相应的信息。</span>
+			</div>
+		</div>
+		<div class="form-actions">
+			<button type="submit" class="btn btn-primary"><i class="icon-save"></i>保存</button>
+			<button type="reset" class="btn"><i class="icon-reply"></i>重置</button>
+		</div>
+	</form>
+</div>
+

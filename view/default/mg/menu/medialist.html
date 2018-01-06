@@ -1,0 +1,99 @@
+<link rel="stylesheet" href="/css/album.css">
+<script type="text/javascript" src="/js/ZeroClipboard.min.js"></script>
+
+<input id="nowpage" type="hidden" value="1">
+<div id="top" class="alert alert-info" style="line-height: 16px;margin:0 0 auto -20px;position:fixed;top:0;z-index:9999;width:100%;" align="center">
+ <a class="btn btn-primary" href="https://mp.weixin.qq.com" target="_blank">到公众平台管理素材 &nbsp;&nbsp;<i class="icon-hand-up"></i>点我跳转</a>
+</div>
+<div class="box-content nozypadding" style="margin-top:30px;">
+
+	<div class="row-fluid">
+		<ul class="photo">
+			{loop $medias as $r}
+			<li>
+				<div class="photoimg">
+					<a title="{$r[content][news_item][title]}" class="cover"> <img
+						src="returnimg.html?media_id={$r[content][news_item][0][thumb_media_id]}">
+					</a>
+					<div class="bd">
+						<h6>{$r[content][news_item][0][title]}</h6>
+						<h6>素材ID:{$r[media_id]}</h6>
+						<p class="sn">{if count($r[content][news_item])>1}多图文{else}单图文{/if}</p>
+					</div>
+					<div class="fr">
+						<a class="copy-button" id="copy_button{$val[id]}"
+							data-clipboard-text="{$r[media_id]}"> 复制素材ID </a>
+					</div>
+				</div>
+			</li> {/loop}
+		</ul>
+	</div>
+	<p onclick="loadmore()" style="border:1px solid red;text-align:center;cursor:pointer;">点击加载更多...</p>
+	<span class="alert copy-success help-inline alert-success hide " style="position:fixed;top:40%;">复制成功,请粘帖到您需要的地方</span>
+	<div class="row-fluid dataTables_wrapper">
+		<div class="dataTables_paginate paging_full_numbers">
+			<span> </span>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+
+	var client = new ZeroClipboard($(".copy-button"));
+	client.on("ready", function(readyEvent) {
+		client.on("aftercopy", function(event) {
+			$('.alert-success').show();
+			setTimeout(function() {
+				$('.alert-success').fadeOut();
+			}, 3000)
+		});
+	});
+	
+	function loadmore(){
+		var pagenum=$('#nowpage').val();
+		if(pagenum==0){
+			_.toast('没有更多了');
+			return;
+		}
+		layer.load(0,1);
+		$.post('getmedia-loadmore.html',{ pagenum:pagenum},function(data){
+			if(data.status==1){
+				var html="";
+				for(var i=0;i<data.data.length;i++){
+					html+='<li><div class="photoimg">'+
+					'<a title="'+data.data[i].title+'" class="cover"> <img'+
+					'	src="returnimg.html?media_id='+data.data[i].mid+'">'+
+					'</a>'+
+					'<div class="bd">'+
+					'	<h6>'+data.data[i].title+'</h6>'+
+					'	<h6>素材ID:'+data.data[i].mid+'</h6>'+
+					'	<p class="sn">'+data.data[i].typ+'</p>'+
+					'</div>'+
+					'<div class="fr">'+
+					'	<a class="copy-button copyload'+pagenum+'" id="copy_button'+data.data[i].mid+'"'+
+					'		data-clipboard-text="'+data.data[i].mid+'"> 复制素材ID </a>'+
+					'</div> </div> </li>';
+				}
+				$('.photo').append(html);
+				var client = new ZeroClipboard($(".copyload"+pagenum));
+				client.on("ready", function(readyEvent) {
+					client.on("aftercopy", function(event) {
+						$('.alert-success').show();
+						setTimeout(function() {
+							$('.alert-success').fadeOut();
+						}, 3000)
+					});
+				});
+				pagenum++;
+				$('#nowpage').val(pagenum);
+				if(data.data.length<1){
+					_.toast('没有更多了');
+					$('#nowpage').val('0');
+				}
+			}else{
+				_.toast('没有更多了');
+				$('#nowpage').val('0')
+			}
+			layer.closeAll();
+		})
+	}
+</script>

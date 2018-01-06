@@ -1,0 +1,33 @@
+<div class="box-title">
+	<h3>
+		<i class="glyphicon-more"></i> 修改密码
+	</h3>
+</div>
+<div class="box-content">
+	<form action="" method="POST" class='form-horizontal'>
+		{tk()}{$m->hidden('id')}
+		<div class="control-group">
+			<label class="control-label">原密码</label>
+			<div class="controls">
+				{$m->password('cpwd','class="input-xlarge"')}</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">新密码</label>
+			<div class="controls">
+				{$m->password('pwd','class="input-xlarge"')}</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">密码确认</label>
+			<div class="controls">
+				{$m->password('npwd','class="input-xlarge"')}</div>
+		</div>
+		<div class="form-actions">
+			<button type="submit" class="btn btn-primary">
+				<i class="icon-save"></i>保存
+			</button>
+			<button type="reset" class="btn">
+				<i class="icon-reply"></i>重置
+			</button>
+		</div>
+	</form>
+</div>

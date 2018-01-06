@@ -1,0 +1,55 @@
+<div class="box-title">
+	<h3>
+		<i class="glyphicon-bank"></i> 用户编辑
+	</h3>
+</div>
+<div class="box-content">
+	<form action="" method="POST" class='form-horizontal'>
+		{tk()}{$u->hidden('id')}
+		<div class="control-group">
+			<label class="control-label">用户账号</label>
+			<div class="controls">
+				{$u->text('un','class="input-xlarge"')}
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">登录密码</label>
+			<div class="controls">
+				{$u->password('pwd','class="input-xlarge"')}
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">用户名称</label>
+			<div class="controls">
+				{$u->text('relun','class="input-xlarge"')}
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">用户角色</label>
+			<div class="controls">
+				{$u->select($part_a,'role','class="input-xlarge"')}
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">联系电话</label>
+			<div class="controls">
+				{$u->text('tel','class="input-xlarge"')}
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">QQ</label>
+			<div class="controls">
+				{$u->text('qq','class="input-xlarge"')}
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">邮箱</label>
+			<div class="controls">
+				{$u->text('email','class="input-xlarge"')}
+			</div>
+		</div>
+		<div class="form-actions">
+			<button type="submit" class="btn btn-primary"><i class="icon-save"></i>保存</button>
+		</div>
+	</form>
+</div>

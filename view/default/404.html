@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9"><meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta names="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+	<title>页面没找到 :(</title>
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/css/bootstrap-responsive.min.css">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/themes.css">
+	<link rel="shortcut icon" href="{$Icon}" />
+</head>
+
+<body class='error'>
+	<div class="wrapper">
+		<div class="code"><span>404</span><i class="icon-warning-sign"></i></div>
+		<div class="desc">很抱歉的告诉您，你访问的地址(<span id="locations"></span>)不存在。</div>
+		<div class="buttons">
+			<div class="pull-left"><a href="/index.html" class="btn"><i class="icon-arrow-left"></i>&nbsp;返回首页</a></div>
+		</div>
+	</div>
+</body>
+<script>
+window.onload = function(){
+	document.getElementById('locations').innerHTML = location.href;
+}
+</script>
+</html>

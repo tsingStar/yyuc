@@ -1,0 +1,44 @@
+<div class="box-title">
+	<h3>
+		<i class="icon-user"></i> 基本信息
+	</h3>
+</div>
+<div class="box-content">
+	<form action="" method="post" class='form-horizontal'>
+		{tk()}{$m->hidden('id')}
+		<div class="control-group">
+			<label class="control-label">账号</label>
+			<div class="controls">
+				<span style="line-height: 30px;">{$m->un}</span>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">手机</label>
+			<div class="controls">{$m->text('tel','class="input-xlarge"')}
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">QQ</label>
+			<div class="controls">{$m->text('qq','class="input-xlarge"')}</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">邮箱</label>
+			<div class="controls">
+				{$m->text('email','class="input-xlarge"')}</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">创建时间</label>
+			<div class="controls">
+				<span style="line-height: 30px;">{$m->ctime}</span>
+			</div>
+		</div>
+		<div class="form-actions">
+			<button type="submit" class="btn btn-primary">
+				<i class="icon-save"></i>保存
+			</button>
+			<button type="reset" class="btn">
+				<i class="icon-reply"></i>重置
+			</button>
+		</div>
+	</form>
+</div>

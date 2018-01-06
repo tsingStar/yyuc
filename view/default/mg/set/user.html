@@ -1,0 +1,78 @@
+<div class="box-title">
+	<h3>
+		<i class="icon-user"></i>用户管理
+	</h3>
+</div>
+<div class="box-content">
+	<form action="" method="get" class="form-horizontal form-validate">
+		<div class="control-group">
+			用户名称：{$tj->text('relun','class="input-small" ')}&nbsp;
+			电话号码：{$tj->text('tel','class="input-small" ')}&nbsp;
+			<button class="btn btn-primary" type="submit">
+				<i class="icon-search"></i>查询
+			</button>
+			<a class="btn btn-primary" href="uedit.html"><i class="icon-plus"></i>添加用户</a>
+		</div>
+	</form>
+</div>
+<div class="box-content nopadding">
+	<table class="table table-hover table-nomargin table-bordered">
+		<thead>
+			<tr>
+				<th>账号</th>
+				<th>用户名称</th>
+				<th>角色</th>
+				<th>联系电话</th>
+				<th>QQ</th>
+				<th>邮箱</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			{loop $res as $r}
+			<tr>
+				<td>{$r->un}</td>
+				<td>{$r->relun}</td>
+				<td>{$part_a[$r->role]}</td>
+				<td>{$r->tel}</td>
+				<td>{$r->qq}</td>
+				<td>{$r->email}</td>
+				<td>
+					<a href="uedit-{$r->id}.html" class="btn">
+						<i class="icon-edit"></i>编辑
+					</a>
+					<button class="btn" onclick="del('{$r->id}')">
+						<i class="icon-trash"></i>删除
+					</button>
+				</td>
+			</tr>
+			{/loop}
+		</tbody>
+	</table>
+	<div class="pagination">
+		<ul>
+			{P}
+		</ul>
+	</div>
+</div>
+<script>
+	function del(id) {
+		var msg1 = '确定删除信息吗?';
+		var msg2 = '删除成功';
+		layer.confirm(msg1, function() {
+			_.ajax('user-del.html', {
+				id : id,
+				del : del
+			}, function(msg) {
+				if (msg != 'ok') {
+					layer.msg(msg1, 1, 1);
+				} else {
+					layer.msg(msg2, 1, 1);
+				}
+				setTimeout(function() {
+					location.reload(true);
+				}, 888);
+			});
+		});
+	}
+</script>

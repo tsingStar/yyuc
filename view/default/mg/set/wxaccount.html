@@ -1,0 +1,78 @@
+<div class="box-title">
+	<h3>
+		<i class="icon-comments-alt"></i> 信息配置
+	</h3>
+</div>
+<div class="box-content">
+	<form action="" method="post" class='form-horizontal'>
+		{tk()}{$m->hidden('id')}
+		<div class="control-group">
+			<label class="control-label">公众号原始ID</label>
+			<div class="controls">
+				{$m->text('wgn','class="input-xlarge"')}
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">开发者AppId</label>
+			<div class="controls">
+				{$m->text('appId','class="input-xlarge"')}</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">开发者AppSecret</label>
+			<div class="controls">
+				{$m->text('appSecret','class="input-xlarge"')}</div>
+		</div>
+		<div class="control-group">
+			<label for="tel" class="control-label">商户号MCHID
+			</label>
+			<div class="controls">
+				{$m->text('mchId','class="input-xlarge"')}
+			</div>
+		</div>
+		<div class="control-group">
+			<label for="tel" class="control-label">财付通商户权限密钥PartnerKey
+			</label>
+			<div class="controls">
+				{$m->text('partnerKey','class="input-xlarge"')}
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">是否获得高级接口权限</label>
+
+			<div class="controls">
+				<label class="checkbox">
+					{$m->checkbox('wapi')}（一般通过微信认证的服务号会拥有此权限） </label>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">是否与微信公众平台对接</label>
+			<div class="controls">
+				<label class="checkbox">
+				{$m->checkbox('wok')}（如不对接请手工填入下面的原始ID） </label>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">服务器配置URL</label>
+			<div class="controls">{Conf::$http_path}wxapi-{$m->id}.html</div>
+		</div>
+
+		<div class="control-group if_show_div1">
+			<label class="control-label">服务器配置Token</label>
+			<div class="controls">{$m->token} {$m->hidden('token')}</div>
+		</div>
+		<div class="control-group if_show_div1">
+			<label class="control-label">服务器配置EncodingAESKey</label>
+			<div class="controls">
+				{$jm43}<br/><span class="help-inline">在公众平台填入此项可提高数据传输安全性</span>
+			</div>
+		</div>
+		<div class="form-actions">
+			<button type="submit" class="btn btn-primary" >
+				<i class="icon-save"></i>保存
+			</button>
+			<button type="reset" class="btn">
+				<i class="icon-reply"></i>重置
+			</button>
+		</div>
+	</form>
+</div>

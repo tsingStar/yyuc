@@ -1,0 +1,294 @@
+<style type="text/css">
+	.subctwdiv{
+		margin-top: 10px;
+		padding-top:10px;
+		border-top: 1px dotted gray;
+		display: none;
+	}
+</style>
+<div class="box-title">
+	<h3>
+		<i class="icon-edit"></i>
+		多图文回复编辑
+	</h3>
+</div>
+<div class="box-content">
+	<form action="" method="POST" class='form-horizontal'>{tk()}{$m->hidden('id')}
+		<div class="control-group">
+			<label class="control-label">关键字</label>
+			<div class="controls">
+				{$m->text('kw','class="input-xlarge" onblur="ckdh(this)"')}
+				<span class="help-block">触发此回复的关键字，多个请以逗号“,”隔开。例如: 美丽,漂亮,好看</span>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">关键字匹配模式</label>
+			<div class="controls">
+				{$m->select($ppms,'kwms','class="input-xlarge"')}
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">主图文标题</label>
+			<div class="controls">
+			{$m->text('tit','class="input-xlarge"')}
+			</div>
+		</div>									
+		<div class="control-group">
+			<label class="control-label">主图文封面</label>
+			<div class="controls">
+			<img class="artpic"  src="{$m->img}"/>
+			<button class="btn picsetbtn" type="button"><i class="icon-picture"></i>设置图片</button>
+			{$m->hidden('img')}
+			<span class="help-block">建议尺寸：700 X 400</span>									
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">主图文目标</label>
+			<div class="controls">
+			{commontarget($m,'url')}										
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">次图文1标题</label>
+			<div class="controls">
+			{$m->text('tit1','class="input-xlarge"')}
+			</div>
+		</div>									
+		<div class="control-group">
+			<label class="control-label">次图文1封面</label>
+			<div class="controls">
+			<img class="artpic"  src="{$m->img1}"/>
+			<button class="btn picsetbtn" type="button"><i class="icon-picture"></i>设置图片</button>
+			{$m->hidden('img1')}
+			<span class="help-block">建议尺寸：200 X 200</span>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">次图文1目标</label>
+			<div class="controls">
+			{commontarget($m,'url1')}										
+			</div>
+		</div>
+		<div class="subctwdiv">
+		<div class="control-group">
+			<label class="control-label">次图文2标题</label>
+			<div class="controls">
+			{$m->text('tit2','class="input-xlarge"')}
+			<button class="btn" type="button" onclick="scctw(this)"><i class="icon-remove-sign"></i>删除</button>
+			</div>
+		</div>									
+		<div class="control-group">
+			<label class="control-label">次图文2封面</label>
+			<div class="controls">
+			<img class="artpic"  src="{$m->img2}"/>
+			<button class="btn picsetbtn" type="button"><i class="icon-picture"></i>设置图片</button>
+			{$m->hidden('img2')}
+			<span class="help-block">建议尺寸：200 X 200</span>								
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">次图文2目标</label>
+			<div class="controls">
+			{commontarget($m,'url2')}										
+			</div>
+		</div>
+		</div>
+		<div class="subctwdiv">
+		<div class="control-group">
+			<label class="control-label">次图文3标题</label>
+			<div class="controls">
+			{$m->text('tit3','class="input-xlarge"')}
+			<button class="btn" type="button" onclick="scctw(this)"><i class="icon-remove-sign"></i>删除</button>
+			</div>
+		</div>									
+		<div class="control-group">
+			<label class="control-label">次图文3封面</label>
+			<div class="controls">
+			<img class="artpic"  src="{$m->img3}"/>
+			<button class="btn picsetbtn" type="button"><i class="icon-picture"></i>设置图片</button>
+			{$m->hidden('img3')}
+			<span class="help-block">建议尺寸：200 X 200</span>								
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">次图文3目标</label>
+			<div class="controls">
+			{commontarget($m,'url3')}										
+			</div>
+		</div>
+		</div>
+		<div class="subctwdiv">
+		<div class="control-group">
+			<label class="control-label">次图文4标题</label>
+			<div class="controls">
+			{$m->text('tit4','class="input-xlarge"')}
+			<button class="btn" type="button" onclick="scctw(this)"><i class="icon-remove-sign"></i>删除</button>
+			</div>
+		</div>									
+		<div class="control-group">
+			<label class="control-label">次图文4封面</label>
+			<div class="controls">
+			<img class="artpic"  src="{$m->img4}"/>
+			<button class="btn picsetbtn" type="button"><i class="icon-picture"></i>设置图片</button>
+			{$m->hidden('img4')}
+			<span class="help-block">建议尺寸：200 X 200</span>								
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">次图文4目标</label>
+			<div class="controls">
+			{commontarget($m,'url4')}										
+			</div>
+		</div>
+		</div>
+		<div class="subctwdiv">
+		<div class="control-group">
+			<label class="control-label">次图文5标题</label>
+			<div class="controls">
+			{$m->text('tit5','class="input-xlarge"')}
+			<button class="btn" type="button" onclick="scctw(this)"><i class="icon-remove-sign"></i>删除</button>
+			</div>
+		</div>									
+		<div class="control-group">
+			<label class="control-label">次图文5封面</label>
+			<div class="controls">
+			<img class="artpic"  src="{$m->img5}"/>
+			<button class="btn picsetbtn" type="button"><i class="icon-picture"></i>设置图片</button>
+			{$m->hidden('img5')}
+			<span class="help-block">建议尺寸：200 X 200</span>								
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">次图文5目标</label>
+			<div class="controls">
+			{commontarget($m,'url5')}										
+			</div>
+		</div>
+		</div>
+		<div class="subctwdiv">
+		<div class="control-group">
+			<label class="control-label">次图文6标题</label>
+			<div class="controls">
+			{$m->text('tit6','class="input-xlarge"')}
+			<button class="btn" type="button" onclick="scctw(this)"><i class="icon-remove-sign"></i>删除</button>
+			</div>
+		</div>									
+		<div class="control-group">
+			<label class="control-label">次图文6封面</label>
+			<div class="controls">
+			<img class="artpic"  src="{$m->img6}"/>
+			<button class="btn picsetbtn" type="button"><i class="icon-picture"></i>设置图片</button>
+			{$m->hidden('img6')}
+			<span class="help-block">建议尺寸：200 X 200</span>								
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">次图文6目标</label>
+			<div class="controls">
+			{commontarget($m,'url6')}										
+			</div>
+		</div>
+		</div>
+		<div class="subctwdiv">
+		<div class="control-group">
+			<label class="control-label">次图文6标题</label>
+			<div class="controls">
+			{$m->text('tit7','class="input-xlarge"')}
+			<button class="btn" type="button" onclick="scctw(this)"><i class="icon-remove-sign"></i>删除</button>
+			</div>
+		</div>									
+		<div class="control-group">
+			<label class="control-label">次图文7封面</label>
+			<div class="controls">
+			<img class="artpic"  src="{$m->img7}"/>
+			<button class="btn picsetbtn" type="button"><i class="icon-picture"></i>设置图片</button>
+			{$m->hidden('img7')}
+			<span class="help-block">建议尺寸：200 X 200</span>								
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">次图文7目标</label>
+			<div class="controls">
+			{commontarget($m,'url7')}										
+			</div>
+		</div>
+		</div>
+		<div class="subctwdiv">
+		<div class="control-group">
+			<label class="control-label">次图文8标题</label>
+			<div class="controls">
+			{$m->text('tit8','class="input-xlarge"')}
+			<button class="btn" type="button" onclick="scctw(this)"><i class="icon-remove-sign"></i>删除</button>
+			</div>
+		</div>									
+		<div class="control-group">
+			<label class="control-label">次图文8封面</label>
+			<div class="controls">
+			<img class="artpic"  src="{$m->img8}"/>
+			<button class="btn picsetbtn" type="button"><i class="icon-picture"></i>设置图片</button>
+			{$m->hidden('img8')}
+			<span class="help-block">建议尺寸：200 X 200</span>								
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">次图文8目标</label>
+			<div class="controls">
+			{commontarget($m,'url8')}										
+			</div>
+		</div>
+		</div>
+		<div>
+		<button class="btn" type="button" onclick="tjctw()"><i class="icon-plus-sign"></i>添加次图文</button>
+		</div>
+		<div class="form-actions">
+			<button type="submit" class="btn btn-primary"><i class="icon-save"></i>保存</button>
+			<button type="reset" class="btn"><i class="icon-reply"></i>重置</button>
+		</div>
+	</form>
+</div>
+<script type="text/javascript">
+function ckdh(o){
+	$(o).val($(o).val().replaceAll('，',','));
+}
+function tjctw(){
+	if($('.subctwdiv:hidden').size()>0){
+		$('.subctwdiv:hidden').eq(0).show();
+	}else{
+		layer.msg('已达到最大数量，无法继续添加');
+	}
+	
+}
+function scctw(o){
+	layer.confirm('确定删除此条图文信息吗?', function(){ 
+		var pdiv = $(o).parent().parent().parent();
+		cicledel(pdiv);
+		layer.msg('删除成功！',1,1);
+	},'删除确认');		
+}
+function cicledel(div){
+	if(div.next('.subctwdiv').is(':visible')){
+		var ndiv = div.next('.subctwdiv');
+		var myz = div.find('input[type="text"],input[type="hidden"],select,textarea,img');
+		var nyz = ndiv.find('input[type="text"],input[type="hidden"],select,textarea,img');
+		nyz.each(function(i){
+			myz.eq(i).val($(this).val());
+			myz.eq(i).attr('src',$(this).attr('src'));
+		});
+		cicledel(ndiv);
+	}else{
+		div.find('input[type="text"],select,textarea').val('');
+		div.hide();
+	}
+	div.find('.target_theurl').each(function(){
+		fill_target_set(this);
+	});
+}
+$(function(){
+	$('.subctwdiv').each(function(){
+		if($.trim($(this).find('input[type="text"]').eq(0).val())!=''){
+			$(this).show();
+		}
+	});
+});
+</script>
+

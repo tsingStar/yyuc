@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9"><meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta names="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+	<title>{$Pname}-密码找回</title>
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/css/bootstrap-responsive.min.css">
+	<link rel="stylesheet" href="/css/plugins/icheck/all.css">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/themes.css">
+	<link rel="shortcut icon" href="{$Icon}"/>
+	<script type="text/javascript" src="/flat/layer/layer.js"></script>
+<script type="text/javascript">
+$(function(){
+	if(window.parent !=window){
+		try{
+			if(window.parent.location.href.indexOf('uhqq.com')){
+				window.parent.location.href = location.href;
+			}
+		}catch(e){
+		}
+	}
+	$('.wrapper').css('opacity',0);
+	pprsize();
+	setTimeout(function(){
+		$('#manbak').animate({
+			   opacity: 0.9
+		 }, 1000);
+	},500);
+});
+$(window).resize(function(){
+	pprsize();
+});
+function pprsize(){
+	$('#manbak').width($(window).width());
+	$('#manbak').height($(window).height());
+	$('.wrapper').stop().animate({
+		top: ($(window).height()/2-$('.wrapper:visible').height()/2+200)+'px', 
+		   opacity: 0.9
+	 }, 900);
+}
+</script>
+<style>
+.auth_forget a{
+background:#078cd1 !important;color:#fff !important;
+}
+.auth_forget a:hover{
+background:#2675C0 !important;
+}
+</style>
+</head>
+<body class='login'>
+<img src="{$Background}" id="manbak" style="position: absolute;left: 0px;top: 0px;z-index: -1;opacity:0;"/>
+	<div class="wrapper" style="top: -500px;" id="wrapper1">
+		<h1><a style="font-size:29px;"><img src="{$Logo}" alt="" class='retina-ready' width="59" height="49">{$Pname}</a></h1>
+		<div class="login-body">
+			<h2>密码重置</h2>
+			<form action="" method='post' class='form-validate' id="test">
+				<div class="control-group">
+					<div class="email controls">
+						登录用户名：{$u->un}
+					</div>
+				</div>
+				<div class="control-group">
+					<div class="email controls">
+						<input type="text" name='pwd' placeholder="输入新密码" class='input-block-level'value="" autocomplete="off" required="required">
+					</div>
+				</div>
+				<div class="control-group">
+					<div class="email controls">
+						<input type="text" name='pwd2' placeholder="再次输入新密码" class='input-block-level'value="" autocomplete="off"  required="required">
+					</div>
+				</div>
+				<div class="submit">
+				<div class="remember" id="remembercode">
+					
+				</div>
+					<button type="submit" class='btn btn-primary' style="float: right;">登录</button>
+				</div>
+			</form>
+			<div class="forget">
+				<a href="login.html"><span>登录系统</span></a>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<div class="box-title">
+	<h3>
+		<i class="icon-sitemap"></i>角色权限分配[不选择则默认拥有所有权限]
+	</h3>
+</div>
+<div class="box-content">
+	选择角色: 
+	<select onchange="setqx(this)"> 
+		{loop $parr as $k=>$p}
+		<option value="{$k}" {if $kk==$k}selected="selected"{/if}>{$p}</option>
+		{/loop}
+	</select>
+	<button class="btn btn-primary" onclick="bcqx()">
+		<i class="icon-save"></i>保存权限
+	</button>
+</div>
+<div class="box-content nopadding">
+	<form method="post" action="" id="mform">
+		{loop $index as $ind}
+		<div class="subnav">
+			<div class="subnav-title">
+				<h3 class='toggle-subnav' style="cursor: pointer;">
+					<span>{$ind['name']}</span>
+				</h3>
+			</div>
+			<ul class="subnav-menu">
+				{loop $ind['sub'] as $in}
+				<li class="subnav-li">
+					<input type="checkbox" value="{$in['file']}" name="qxarr[]" {if in_array($in['file'],$qxarr)}checked="checked" {/if}/>
+					<span href="javascript:;" ppid="{$in['file']}" target="workarea">{$in['name']}</span>
+				</li> 
+				{/loop}
+			</ul>
+		</div>
+		{/loop}
+	</form>
+</div>
+<script>
+function bcqx(){
+	$('#mform').submit();
+}
+function setqx(o){
+	location.href='auth.html?bmid='+$(o).val();
+}
+$(function(){
+	$('.toggle-subnav').click(function(){
+		if($(this).parent().parent().find('input[type="checkbox"]:checked').size()>0){
+			$(this).parent().parent().find('input[type="checkbox"]').prop('checked',false);
+		}else{
+			$(this).parent().parent().find('input[type="checkbox"]').prop('checked',true);
+		}
+	});
+});
+</script>
+<style>
+.subnav-menu {
+	list-style: none;
+}
+
+.subnav {
+	display: inline-block;
+	margin: 20px;
+	border-top: 1px solid gray;
+	padding: 20px;
+	vertical-align: top;
+}
+</style>

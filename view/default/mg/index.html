@@ -1,0 +1,310 @@
+<!--@NO-WRAP-->
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta names="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<title>{$Pname}</title>
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/bootstrap-responsive.min.css">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/themes.css">
+<link rel="stylesheet" href="/css/pageguide.min.css">
+<link rel="stylesheet" href="/css/menu_left.css">
+<script type="text/javascript" src="/flat/layer/layer.js"></script>
+<script type="text/javascript" src="/js/pageguide.min.js"></script>
+<style type="text/css">
+.mainmain {
+	margin-left: 0px;
+}
+
+.menu_sta {
+	FONT-SIZE: 50%;
+	color: #ff0000;
+	border: 1px solid #ff0000;
+	border-radius: 3px;
+}
+</style>
+<script type="text/javascript">
+$(function(){
+	$('#main').height($(window).height());
+	$('#workarea').height($(window).height()-40);
+	$(window).resize(function(){
+		$('#main').height($(window).height());
+		$('#workarea').height($(window).height()-40);
+	});
+	$('.dropdown').each(function(){
+    	$(this).mouseenter(function(){
+    		$(this).children('ul').show();
+    		$('#tlyPageGuideWrapper').hide();
+    	}).mouseleave(function(){
+    		$(this).children('ul').hide();
+    		$('#tlyPageGuideWrapper').show();
+    	});
+    });
+    
+    $('.theme-colors').find('span').click(function(){
+    	var col = 'theme-'+$(this).attr('class');
+    	_.ajax('indexst.html',{ col:col},function(){
+    		$('body').removeClass().addClass(col);
+    		$('#workarea').contents().find("body").removeClass().addClass(col);
+    		$('#workarea').contents().find("iframe").contents().find("body").removeClass().addClass(col);
+    	});
+    	$('.theme-colors').hide();
+    });
+    $('.toggle-nav').click(function(){
+    	if($('#main').is('.mainmain')){
+    		$('#main').removeClass('mainmain');	
+    		$('#left').hide();
+    		$('.right').css('left','200px');
+    		$(this).children('i').removeClass('icon-indent-right').addClass('icon-indent-left');
+    	}else{
+    		$('#main').addClass('mainmain');
+    		$('#left').show();
+    		$('.right').css('left','0px');
+    		$(this).children('i').removeClass('icon-indent-left').addClass('icon-indent-right');    		
+    	}    	
+    });
+    $('.main-nav').children('li').click(function(){
+    	$('.main-nav').find('li').removeClass('active');
+    	$(this).addClass('active');
+    });
+    
+   
+    
+    $('#kjgndhbtn').on('mouseup keyup change',function(){
+    	var vil = $.trim($(this).val());
+    	if(vil !=''){
+    		$('.subnav-title').each(function(){
+    			if($(this).parent().attr('noifa')=='1'){
+    				$(this).parent().hide();
+    				return;
+    			}
+    			var vi1 = $(this).find('span').html();
+    			if(vi1.indexOf(vil)!=-1){
+    				$(this).parent().show();
+    			}else{
+    				$(this).next('ul').hide();
+    				$(this).parent().hide();    				
+    			}
+    		});
+    		$('.subnav-li').each(function(){
+    			if($(this).attr('noifa')=='1'){
+    				$(this).hide();
+    				return;
+    			}
+    			var vi2 = $(this).text();
+    			if(vi2.indexOf(vil)!=-1){
+    				$(this).show();
+    				$(this).parent().show();
+    				$(this).parent().parent().show();
+    			}else{
+    				$(this).hide();
+    			}
+    		});
+    		$('.subnav-menu').show();
+    	}else{
+    		$('.subnav-title').parent().show();
+    		$('.subnav-li').show();
+    		$('.subnav-menu').hide();
+    		$('[noifa="1"]').hide();
+    	}
+    	
+    });
+    $('.subnav').mousemove(function(){
+		$('.icon-js').removeClass('bg-icon-color');
+		$(this).find('.icon-js').addClass('bg-icon-color');
+	}).mouseleave(function(){
+		$('.icon-js').removeClass('bg-icon-color');
+	})
+});
+function sysquit(force){
+	if(!force){
+		setTimeout(function(){
+			layer.confirm('确定要退出系统吗？', function(){
+				location.href="/logout.html";
+			});
+		},666);		
+	}else{
+		location.href="/logout.html";
+	}
+}
+</script>
+
+<link rel="shortcut icon" href="{$Icon}" />
+</head>
+
+<body style="overflow: hidden;" class="{Session::get('st')}"
+	ifa="{Session::get('isfree')}"">
+	<div id="navigation"
+		style="position: fixed; _position: absolute; width: 100%; top: 0px; left: 0px;">
+		<div class="container-fluid">
+			<i style="font-size: 30px; position: absolute; top: 3px; left: 6px; color: white;">
+				<img src="/img/youjian.png" />
+			</i> 
+			<a id="brand">&nbsp;&nbsp;&nbsp;{$Pname}</a>
+			<a class="toggle-nav" rel="tooltip" data-placement="bottom" title="切换显示左侧导航">
+				<i class="icon-indent-left"></i>
+			</a>
+			<ul class='main-nav'>
+				<li></li>
+			</ul>
+			<div class="user">
+				<ul class="icon-nav">
+					<li class='dropdown colo'>
+						<a href="#" class='dropdown-toggle' data-toggle="dropdown">主题颜色&nbsp;
+							<i class="icon-tint"></i>
+						</a>
+						<ul class="dropdown-menu pull-right theme-colors">
+							<li class="subtitle">选择并设定主题颜色</li>
+							<li>
+								<span class='red'></span> 
+								<span class='orange'></span> 
+								<span class='green'></span> 
+								<span class="brown"></span> 
+								<span class="blue"></span> 
+								<span class='lime'></span> 
+								<span class="teal"></span> 
+								<span class="purple"></span> 
+								<span class="pink"></span> 
+								<span class="magenta"></span> 
+								<span class="grey"></span> 
+								<span class="darkblue"></span> 
+								<span class="lightred"></span> 
+								<span class="lightgrey"></span> 
+								<span class="satblue"></span> 
+								<span class="satgreen"></span>
+							</li>
+						</ul>
+					</li>
+					<li class="dropdown sett">
+						<a href="#" class='dropdown-toggle' data-toggle="dropdown">用户中心&nbsp;
+							<i class="icon-cog"></i>
+						</a>
+						<ul class="dropdown-menu pull-right theme-settings">
+							<li>
+								<div class="version-toggle">
+									<a href="/mg/set/account.html" target="workarea" class='set-fixed'>账户信息</a> 
+									<a href="/mg/set/setpwd.html" target="workarea" class="set-fluid">密码修改</a>
+								</div>
+							</li>
+						</ul>
+					</li>
+					<li class="dropdown sett">
+						<a href="javascript:;" class='dropdown-toggle' onclick="sysquit()" ondblclick="sysquit(true)" title="双击直接退出">退出系统&nbsp;
+							<i class="icon-share-alt"></i>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid" id="content">
+		<div id="left" style="overflow: auto;">
+			<div class="uhqq-top-pane" style="height: 15px;"></div>
+			<script type="text/javascript" src="/js/menu_left.js"></script>
+			<form action="search-results.html" class="search-form" onsubmit="return false;">
+				<div class="search-pane">
+					<input type="text" name="search" id="kjgndhbtn" placeholder="快捷功能导航...">
+				</div>
+			</form>
+			{loop $index as $ind}
+			<div class="subnav" ifa="{$ind['isfree']}">
+				<div class="subnav-title first-subnav ">
+					<a href="javascript:void(0)" id="{$ind['id']}" class="toggle-subnav"> 
+						<em> 
+							<strong class="icon-menu"></strong>
+							<b class="icon-js">&nbsp;</b>
+						</em> 
+						<span>{$ind['name']}</span> 
+						<i class="icon-angle-down"></i>
+					</a>
+				</div>
+				<ul class="subnav-menu" style="display: none;">
+					{loop $ind['sub'] as $in}
+					<li class="subnav-li" ifa="{$in['isfree']}">
+						{if count($in[sub])>=1}
+						<div class="subnav-title second-subnav">
+							<a href="javascript:void(0)" id="{$in['id']}" class="toggle-subnav" style="border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(209, 209, 209);">
+								<i class="icon-angle-down"></i> 
+								<span>{$in['name']}</span>
+							</a>
+						</div>
+						<ul class="subnav-menu third-subnav" style="border-bottom-width: 0px; display: none;">
+							{loop $in[sub] as $sec}
+							<li>
+								<!-- class="active" --> 
+								<a href="{if trim($sec['file'])=='#'}javascript:;{else}/mg/{$sec['file']}.html{/if}" id="{$sec['id']}" target="workarea">{$sec['name']}</a>
+							</li> 
+							{/loop}
+						</ul> 
+						{else}
+						<div class="subnav-title second-subnav isurl">
+							<a href="{if trim($in['file'])=='#'}javascript:;{else}/mg/{$in['file']}.html{/if}" id="{$in['id']}" class="toggle-subnav" target="workarea" style="border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(209, 209, 209);">
+								<i class="icon-angle-down icon-space"></i>
+								<span>{$in['name']}</span>
+							</a>
+						</div> 
+						{/if}
+					</li> 
+					{/loop}
+				</ul>
+			</div>
+			{/loop} 
+			<br/>
+			<br/>
+			<br/>
+		</div>
+		<div class="right" style="position: absolute; right: 0px; top: 0px; bottom: 0px; left: 200px;">
+			<div id="main" style="height: 100%; width: 100%; margin-left: 0px; padding: 0px;">
+				<div style="height: 40px; width: 100%;"></div>
+				<iframe frameborder="0" id="workarea" name="workarea" src="{$indexurl}" style="background: url('/img/loading.gif') center no-repeat; border: none; width: 100%; height: 100%;"></iframe>
+			</div>
+		</div>
+	</div>
+	<div class="div_fade modal-backdrop fade in" style="display: none;"></div>
+	<div class="div_fade2 modal-backdrop2 modal-backdrop fade in" style="display: none;"></div>
+	<script>
+	$(function(){
+		var ifshow=false;
+		var host="{$host}";
+		if(host=="show"){
+			ifshow=true;
+		}
+		var qrcode="{$qrcode}";
+		var ifshowq=false;
+		if(qrcode=="show"){
+		ifshowq=true;
+   	  	}
+   	  	if(ifshow){
+			$('.modal-backdrop').show();
+			$('#authenticateModal').slideDown();  
+		}else if(ifshowq){
+			$('.modal-backdrop2').show();
+			$('#qrcodeModal').slideDown(); 
+		}
+		$('.div_fade').click(function(){
+			$('.modal-backdrop').hide();
+			$('#authenticateModal').hide();
+		});
+		$('.div_fade2').click(function(){
+			$('.modal-backdrop2').hide();
+			$('#qrcodeModal').hide();
+		});
+		if('{$tsqc}'=='yes'){
+			$('#authenticateModal').hide();
+		}
+	});
+	function toshow2(a){
+		$('#left .subnav ul').slideUp();
+		$('#left .subnav .subnav-li a[href="'+a+'"]').parents('ul').slideToggle();
+		$('#left .subnav .subnav-li a[href="'+a+'"]').parents('li').find('li,div').addClass('active');
+		$('#workarea').attr('src', a);
+	}
+	</script>
+</body>
+</html>
+

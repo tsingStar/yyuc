@@ -1,0 +1,48 @@
+<div class="box-title">
+	<h3>
+		<i class="icon-edit"></i> 文字回复编辑
+	</h3>
+</div>
+<div class="box-content">
+	<form action="" method="POST" class='form-horizontal'>
+		{tk()}{$m->hidden('id')}
+		<div class="control-group">
+			<label class="control-label">回复标识</label>
+			<div class="controls">
+				{$m->text('tit','class="input-xlarge"')} <span class="help-block">方便区分回复内容，无实际意义</span>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">关键字</label>
+			<div class="controls">
+				{$m->text('kw','class="input-xlarge" onblur="ckdh(this)"')} <span
+					class="help-block">触发此回复的关键字，多个请以逗号“,”隔开。例如: 美丽,漂亮,好看</span>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">关键字匹配模式</label>
+			<div class="controls">
+				{$m->select($ppms,'kwms','style="width:285px"')}</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">回复内容</label>
+			<div class="controls">
+				{$m->texteditor('con','items:["link","unlink","emoticons"]','500px','250px')}
+			</div>
+		</div>
+		<div class="form-actions">
+			<button type="submit" class="btn btn-primary">
+				<i class="icon-save"></i>保存
+			</button>
+			<button type="reset" class="btn">
+				<i class="icon-reply"></i>重置
+			</button>
+		</div>
+	</form>
+</div>
+<script type="text/javascript">
+	function ckdh(o) {
+		$(o).val($(o).val().replaceAll('，', ','));
+	}
+</script>
+

@@ -1,0 +1,221 @@
+<!--@NO-WRAP-->
+<!doctype html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9"><meta charset="utf-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/css/bootstrap-responsive.min.css">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/themes.css">
+	<script type="text/javascript" src="/flat/layer/layer.js"></script>
+	<style type="text/css">
+	.objselcls{
+		height:36px;
+		line-height: 36px;
+		margin-left: 10px;
+		width: 336px;
+		float: left;
+		font-size:20px;
+		white-space: nowrap;
+		overflow: hidden;
+	}
+	.objselcls.curr{
+		background-color: blue;
+		color: white;
+	}
+	.icon-play-circle{
+		cursor: pointer;
+	}
+	</style>
+	<script type="text/javascript">
+	$(function(){
+		$('.spname').each(function(){
+			$(this).html(getpiccname($(this).attr('url')));
+		});		
+		$('#mainobjarea').delegate('.objselcls','click',function(){
+			$('.objselcls').removeClass('curr');
+			$(this).addClass('curr');			
+		});
+		$('#mainobjarea').delegate('.icon-play-circle','click',function(){//演示播放
+			window.demovideopopdiv = $.layer({
+			    type : 2,
+			    title : '视频预览',
+			    move : ['.xubox_title' , true],
+			    iframe : { src : $(this).attr('relurl')},
+			    area : ['400px' , '300px'],
+			    offset : ['30px','50%']
+			});
+			e.stopPropagation();
+			e.preventDefault();
+			return false;
+		});
+		
+	});
+	
+	
+	//图片选择后的操作 用于增加其他参数
+	function picseled(fn,fm){
+		//$('#appdenfnnum').remove();
+		//fm.append('<input type="hidden" name="fnrel" id="appdenfnnum" value="'+window.fnrel+'"/>');
+		return true;
+	}
+	
+	function removepic(){
+		var tli = $('#mainobjarea').find('.objselcls.curr');
+		var timg = tli.find('.icon-play-circle');
+		var pn = timg.attr('relurl');		
+		_.ajax('videos8del.html',{ pn:pn},function(m){
+			if(m=='ok'){
+				tli.remove();
+			}
+		});
+	}
+	
+	
+	function selectpic(){		
+		var url = $('#mainobjarea').find('.objselcls.curr').find('.icon-play-circle').attr('relurl');
+		setpic(url);		
+	}
+	function hideup(url,f){
+		f.css('opacity',0);
+		window.cutform = f;
+	}
+	function showup(url,f){
+		window.cutform.css('opacity',1);
+	}
+	function newpicok(url){
+		$('#mainobjarea').prepend('<div class="objselcls">&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-play-circle" relurl="'+url+'"></i><span class="spname">'+getpiccname(url)+'</span><i class="icon-facetime-video"></i></div>');
+		$('#mainobjarea').find('.objselcls').eq(0).trigger('click');
+	}
+	function setpic(url){
+		if(window.parent.picsetimg){
+			window.parent.picsetimg.attr('src',url);
+			window.parent.picsetimg = null;
+		}
+		if(window.parent.picsetinput){
+			window.parent.picsetinput.val(url);
+			window.parent.picsetinput = null;
+		}
+		window.parent.layer.close(window.parent.picsetpopdiv);
+	}
+	function getpiccname(url){
+		var endIndex = url.lastIndexOf ('.');
+		var name = url.substring(0,endIndex);		
+		return name;
+	}
+		
+	</script>
+</head>
+
+<body style="overflow: hidden;" class="{Session::get('st')}">
+	<div class="container-fluid" id="content">
+	<table style="border:none;padding:0;margin:0;width:700px;height:470px;">
+	<tr>
+	<td colspan="4" id="mainobjarea" valign="top">
+	{loop $res as $k=>$v}
+	<div class="objselcls">&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-play-circle" relurl="{Conf::$remote_path.upath('videos')}/{$v}"></i>
+	<span class="spname" url="{$v}"></span>
+	<i class="icon-facetime-video"></i>
+	</div>
+	{/loop}
+	</td>
+	</tr>
+		<tr style="border:none;padding:0;margin:0;width:auto;height:30px;">
+		<td style="width:430px;">&nbsp;</td>
+		<td style="border:none;padding:0;margin:0;width:auto;height:30px;" valign="top">
+		<button class="btn btn-primary" style="vertical-align:top;" onclick="selectpic();"><i class="glyphicon-ok"></i>&nbsp;确定选择</button>
+		</td>
+		<td style="border:none;padding:0;margin:0;width:auto;height:30px;" valign="top">
+		<button class="btn btn-inverse" style="vertical-align:top;" onclick="removepic();"><i class="glyphicon-remove"></i>&nbsp;删除</button>
+		</td>
+		<td style="border:none;padding:0;margin:0;width:auto;height:30px;" valign="top">
+		<button id="up" class="btn btn-success" style="vertical-align:top;" onclick="up()"><i class="glyphicon-inbox_out"></i>&nbsp;上传</button>
+		<button id="qd" class="btn btn-success" style="vertical-align:top;display:none" onclick="sendRequest()"><i class="glyphicon-inbox_out"></i>&nbsp;确定上传</button>
+		</td>
+		</tr>
+		</table>
+		<form enctype="multipart/form-data" action="upload.php" method="post" style="display:none">
+			<input type="file" id="file"/>
+		</form>
+	</div>
+<script type="text/javascript">
+const BYTES_PER_CHUNK = 1024 * 1024 * 2; // 每个文件切片大小定为1MB .
+var up_url = "{Conf::$http_path}mg/upload.html";
+var hc_url = "{Conf::$http_path}mg/merge.html";
+var slices;
+var totalSlices;
+//发送请求
+function up(){
+	$('#file').click();
+	$('#up').hide();
+	$('#qd').show();
+}
+function sendRequest() {
+	window.id = layer.load();
+	var blob = document.getElementById('file').files[0];
+	var start = 0;
+	var end;
+	var index = 0;
+	// 计算文件切片总数
+	slices = Math.ceil(blob.size / BYTES_PER_CHUNK);
+	totalSlices = slices;
+	while (start < blob.size) {
+		end = start + BYTES_PER_CHUNK;
+		if (end > blob.size) {
+			end = blob.size;
+		}
+		uploadFile(blob,index,start,end);
+		start = end;
+		index++;
+	}
+}
+//上传文件
+function uploadFile(blob,index,start,end) {
+	var xhr;
+	var fd;
+	var chunk;
+	xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState == 4) {
+			if (xhr.responseText) {
+				alert(xhr.responseText);
+			}
+			slices--;
+			// 如果所有文件切片都成功发送，发送文件合并请求。
+			if (slices == 0) {
+				mergeFile(blob);
+				layer.msg('文件上传完毕',2,-1);
+				setTimeout(function(){
+					location.reload();
+				},2000);
+			}
+		}
+	};
+	chunk = blob.slice(start,end);//切割文件
+	//构造form数据
+	fd = new FormData();
+	fd.append("file", chunk);
+	fd.append("name", blob.name);
+	fd.append("index", index);
+	xhr.open("POST", up_url, true);
+	//设置二进制文边界件头
+	xhr.setRequestHeader("X_Requested_With", location.href.split("/")[3].replace(/[^a-z]+/g, '$'));
+	xhr.send(fd);
+}
+function mergeFile(blob) {
+	var xhr;
+	var fd;
+	xhr = new XMLHttpRequest();
+	fd = new FormData();
+	fd.append("name", blob.name);
+	fd.append("index", totalSlices);
+	xhr.open("POST", hc_url, true);
+	xhr.setRequestHeader("X_Requested_With", location.href.split("/")[3].replace(/[^a-z]+/g, '$'));
+	xhr.send(fd);
+}
+</script>
+</body>
+</html>
+

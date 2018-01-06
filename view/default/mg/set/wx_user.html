@@ -1,0 +1,71 @@
+<style>
+#listTable td {
+	text-align: center;
+}
+</style>
+<div class="box-title">
+	<div class="span8" style="padding-bottom:10px">
+		<h3>
+			<i class="icon-table"></i>微信用户管理
+		</h3>
+	</div>
+	<div class="span10" style="width:100%;">
+		<h3>
+			<form action="" method="post">
+				<span style="font-size: 17px;">
+					昵称：{$tj->text('unick','class="input-small"')}&nbsp;
+					状态：{$tj->select($gz_arr,'gz','style="width:110px"')}&nbsp;
+					<button type="submit" class="btn btn-primary"><i class="icon-search"></i>查询</button>
+				</span>
+			</form>
+		</h3>
+	</div>
+</div>
+<div class="box-content" style="padding-top:10px">
+	<div class="row-fluid dataTables_wrapper">
+		<table id="listTable" class="table table-bordered table-hover  dataTable">
+			<thead>
+				<tr>
+					<th>头像</th>
+					<th>昵称</th>
+					<th>推荐人</th>
+					<th>状态</th>
+					<th>关注时间</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $ps as $v}
+				<tr>
+					<td><img src="{$v->upic}" style="width: 50px"></td>
+					<td>{$v->unick}</td>
+					<td>
+						{if $v->tj != '0'}
+						<span style="color:#368EE0">{$v->tj}</span>
+						{else}
+						自主关注
+						{/if}
+					</td>
+					<td>
+						{if $v->gz == 1} 
+							<i class="icon-ok" style="color: green">正在关注
+						{else}&nbsp; 
+							<i class="icon-remove" style="color: red">取消关注
+						{/if} 
+					</td>
+					<td>{$v->ctime}</td>
+					<td>
+						<a onclick="deldata({$v->id},'user');" class="btn">
+							<i class="icon-trash"></i>删除
+						</a>
+					</td>
+				</tr>
+				{/loop}
+			</tbody>
+		</table>
+		<div class="pagination">
+			<ul>{P}
+			</ul>
+		</div>
+	</div>
+</div>
